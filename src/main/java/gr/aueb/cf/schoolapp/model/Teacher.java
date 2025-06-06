@@ -28,6 +28,10 @@ public class Teacher {
     @JoinColumn(name = "personal_info_id")
     private PersonalInfo personalInfo;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public void initializeUUID() {
         if (uuid == null) uuid = UUID.randomUUID().toString();
     }

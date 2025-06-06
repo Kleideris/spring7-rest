@@ -7,6 +7,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -60,6 +61,24 @@ public class User extends AbstractEntity implements UserDetails {
 
     @Enumerated(EnumType.STRING)
     private Role role;
+
+    @ColumnDefault("true")
+    @Column(name = "is_active")
+    private Boolean isActive;
+
+    @OneToOne(mappedBy = "user")
+    private Teacher teacher;
+
+    @OneToOne(mappedBy = "user")
+    private Employee employee;
+
+    public boolean isTeacher() {
+        return getTeacher() != null;
+    }
+
+    public boolean isEmployee() {
+        return getEmployee() != null;
+    }
 
 
     @Override
