@@ -28,7 +28,7 @@ public class GenericFilters {
     }
 
     public String getSortBy() {
-        if (sortBy == null || sortBy.isBlank() return DEFAULT_SORT_COLUMN);
+        if (sortBy == null || sortBy.isBlank()) return DEFAULT_SORT_COLUMN;
         return sortBy;
     }
 
