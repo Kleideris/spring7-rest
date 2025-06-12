@@ -30,7 +30,9 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -107,6 +109,13 @@ public class TeacherService {
         return teacherRepository.findAll(pageable).map(mapper::mapToTeacherReadOnlyDTO);
     }
 
+    @Transactional
+    public List<TeacherReadOnlyDTO> getTeachersFiltered(TeacherFilters filters) {
+        return teacherRepository.findAll(getSpecsFromFilters(filters))
+                .stream().map(mapper::mapToTeacherReadOnlyDTO).collect(Collectors.toList());
+    }
+
+    @Transactional
     public Paginated<TeacherReadOnlyDTO> getTeacherFilteredPaginated(TeacherFilters filters) {
         var filtered = teacherRepository.findAll(getSpecsFromFilters(filters), filters.getPageable());
         return new Paginated<>(filtered.map(mapper::mapToTeacherReadOnlyDTO));
